@@ -9,10 +9,8 @@ module.exports.signup = (req, res, next) => {
 }
 
 module.exports.doSignup = (req, res, next) => {
-
-    console.log(req.body)
     User.findOne({email : req.body.email})
-        .then(user =>{
+        .then(user => {
             if(user) {
                 res.render('auth/signup', {
                     user: req.body,
@@ -30,3 +28,41 @@ module.exports.doSignup = (req, res, next) => {
             next(error);
         })
     };
+
+    module.exports.login = (req, res, next) => {
+        res.render('auth/login', {
+          errorMessage: ''
+          });
+    };
+
+    module.exports.doLogin = (req, res, next) => {
+        const email = req.body.email;
+        const password = req.body.password;
+      
+        if (email === '' || password === '') {
+          res.render('auth/login', {
+            errorMessage: 'Enter both email and password to log in.'
+          });
+          return;
+        }
+      
+        User.findOne({ email: email }, (err, user) => {
+          if (err || user === null) {
+            res.render('auth/login', {
+              errorMessage: `There isn't an account with email ${emailInput}.`
+            });
+            return;
+          }
+      
+          if (!bcrypt.compareSync(password, user.password)) {
+            res.render('auth/login', {
+              errorMessage: 'Invalid password.'
+            });
+            return;
+          }
+      
+          req.session.currentUser = user;
+          res.redirect('/');
+          console.log('logged in');
+        });
+    }

@@ -8,7 +8,7 @@ module.exports.signup = (req, res, next) => {
     })
 }
 
-module.exports.doSignup = ("/signup", (req, res, next) => {
+module.exports.doSignup = (req, res, next) => {
     const nameInput = req.body.name;
     const emailInput = req.body.email;
     const passwordInput = req.body.password;
@@ -33,4 +33,4 @@ module.exports.doSignup = ("/signup", (req, res, next) => {
         return;
         }
       });
-    });
+    };

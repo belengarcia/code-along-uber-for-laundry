@@ -95,6 +95,7 @@ router.get('/login',(req, res,next) => {
   
       req.session.currentUser = theUser;
       res.redirect('/');
+      console.log('logged in');
     });
   });
 

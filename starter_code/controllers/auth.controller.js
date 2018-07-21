@@ -1,6 +1,7 @@
 
 const mongoose = require("mongoose");
 const User = require("../models/user");
+const bcrypt = require('bcrypt');
 
 module.exports.signup = (req, res, next) => {
     res.render('auth/signup', {
@@ -29,15 +30,19 @@ module.exports.doSignup = (req, res, next) => {
         })
     };
 
-    module.exports.login = (req, res, next) => {
+module.exports.login = (req, res, next) => {
         res.render('auth/login', {
           errorMessage: ''
-          });
+          });        
     };
+    
 
-    module.exports.doLogin = (req, res, next) => {
+module.exports.doLogin = (req, res, next) => {
+
         const email = req.body.email;
         const password = req.body.password;
+
+        console.log('entra en login');
       
         if (email === '' || password === '') {
           res.render('auth/login', {

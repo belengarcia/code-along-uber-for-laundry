@@ -9,6 +9,8 @@ const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
 
+const index = require('./routes/index')
+const authRoutes = require('./routes/auth')
 
 mongoose.Promise = Promise;
 mongoose
@@ -47,6 +49,7 @@ app.locals.title = 'Express - Generated with IronGenerator';
 
 const index = require('./routes/index');
 app.use('/', index);
+app.use('/', authRoutes);
 
 
 module.exports = app;

@@ -9,6 +9,8 @@ const authController = require('../controllers/auth.controller');
 router.get('/signup', authController.signup);
 router.post('/signup', authController.doSignup);
 
+
+
 // router.post("/signup", (req, res, next) => {
 //     const nameInput = req.body.name;
 //     const emailInput = req.body.email;

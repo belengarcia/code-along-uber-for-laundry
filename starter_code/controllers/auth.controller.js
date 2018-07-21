@@ -9,13 +9,24 @@ module.exports.signup = (req, res, next) => {
 }
 
 module.exports.doSignup = (req, res, next) => {
-    const nameInput = req.body.name;
-    const emailInput = req.body.email;
-    const passwordInput = req.body.password;
 
     console.log(req.body)
-    User.findOne(emailInput)
+    User.findOne({email : req.body.email})
         .then(user =>{
-            
+            if(user) {
+                res.render('auth/signup', {
+                    user: req.body,
+                    error : 'email is already'
+                })
+            } else {
+                user = new User(req.body)
+                return user.save()
+                .then( user => {
+                 res.redirect('/auth/login')
+                });
+            }
+        })
+        .catch(error => {
+            next(error);
         })
     };
